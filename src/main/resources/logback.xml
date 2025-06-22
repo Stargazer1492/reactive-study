@@ -8,11 +8,6 @@
         </encoder>
     </appender>
 
-    <!-- 项目包日志级别 -->
-    <logger name="com.example" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
     <!-- 根日志配置 -->
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

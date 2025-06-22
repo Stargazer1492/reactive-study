@@ -1,4 +1,4 @@
-package org.stargazer1492.reactive_study;
+package org.stargazer1492.reactivestudy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

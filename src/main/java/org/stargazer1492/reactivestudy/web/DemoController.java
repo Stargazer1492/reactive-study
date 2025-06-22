@@ -1,4 +1,4 @@
-package org.stargazer1492.reactive_study.web;
+package org.stargazer1492.reactivestudy.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -17,12 +17,15 @@ import java.util.concurrent.Callable;
 @Slf4j
 public class DemoController {
 
+    private static final String END_FLAT = "[DONE]";
+
     @GetMapping(value = "/async/reactive", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> asyncReactive() {
         log.info("request start");
         return Flux.just(1, 2, 3)
                    .log()
                    .flatMap(i -> expensiveAction(String.valueOf(i)))
+                   .concatWithValues(END_FLAT)
                    .doOnComplete(() -> log.info("request end"))
                    .subscribeOn(Schedulers.boundedElastic());
     }

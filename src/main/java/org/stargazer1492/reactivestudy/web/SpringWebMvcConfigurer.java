@@ -1,4 +1,4 @@
-package org.stargazer1492.reactive_study.web;
+package org.stargazer1492.reactivestudy.web;
 
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
