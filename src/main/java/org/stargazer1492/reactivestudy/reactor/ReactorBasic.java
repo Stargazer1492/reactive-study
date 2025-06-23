@@ -11,7 +11,9 @@ import okhttp3.sse.EventSource;
 import okhttp3.sse.EventSourceListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
@@ -126,6 +128,28 @@ public class ReactorBasic {
             })
             .subscribe();
         log.info("after subscribe called");
+
+        Flux flow = Flux.range(0, 5)
+                        .flatMap(i -> Mono.just(
+                                                  "flatMap on [" + Thread.currentThread().getName() + "] " +
+                                                          "-> " + i
+                                          )
+                                          .delayElement(Duration.ofMillis(50)));
+
+        Disposable execStatus = flow.subscribe(System.out::println);
+
+        System.out.println("SUBSCRIPTION DONE");
+
+        do {
+            System.out.println("Waiting for the flow to end...");
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        } while (!execStatus.isDisposed());
+
+        System.out.println("FLUX PROCESSED");
     }
 
     public static void testConcurrentStream() {
@@ -224,6 +248,30 @@ public class ReactorBasic {
         }
     }
 
+    public static void testBlock() {
+        Flux.range(0, 5)
+            .doOnNext(i -> {
+                System.out.println("start " + i + " Thread: " + Thread.currentThread().getName());
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            })
+            .flatMap(i -> {
+                //                        if (i == 100) return Mono.error(new RuntimeException("Died cuz i = 100"));
+                System.out.println("end" + i + " Thread: " + Thread.currentThread().getName());
+                return Mono.just(i);
+            })
+            .doOnError(err -> {
+                throw new RuntimeException(err.getMessage());
+            })
+            // 如果使用了block，即便指定了流执行的线程池，主线程也不会被释放，而是一直阻塞在这里，等待流的执行完毕
+            .subscribeOn(Schedulers.boundedElastic())
+            .blockLast();
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Hello world");
+    }
+
     public static void main(String[] args) {
 //        testStreamCreation();
 //        testStreamFailure();
@@ -232,6 +280,7 @@ public class ReactorBasic {
 //        testConcurrentStream();
 //        testMultipleThreads();
 //        testMerge();
+//        testBlock();
     }
 
     public static Flux<String> queryCache(Query query) {

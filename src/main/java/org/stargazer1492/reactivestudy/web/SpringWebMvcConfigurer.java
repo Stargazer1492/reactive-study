@@ -1,5 +1,6 @@
 package org.stargazer1492.reactivestudy.web;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author weijianglong
  * @since 2025/6/5
  */
-//@Configuration
+@Configuration
 public class SpringWebMvcConfigurer implements WebMvcConfigurer {
 
     private static ExecutorService springAsyncThreadPool = new ThreadPoolExecutor(
