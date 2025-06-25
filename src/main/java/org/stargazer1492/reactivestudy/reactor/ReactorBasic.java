@@ -21,7 +21,7 @@ import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @author weijianglong
+ * @author stargazer
  * @since 2025/6/22
  */
 @Slf4j

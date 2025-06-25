@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author weijianglong
+ * @author stargazer
  * @since 2025/6/20
  */
 @Slf4j

@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * @author weijianglong
+ * @author stargazer
  * @since 2025/6/20
  */
 @Slf4j

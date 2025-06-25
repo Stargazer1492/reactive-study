@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author weijianglong
+ * @author stargazer
  * @since 2025/6/5
  */
 @Configuration
@@ -33,7 +33,7 @@ public class SpringWebMvcConfigurer implements WebMvcConfigurer {
 
     @PostConstruct
     public void init() {
-        startThreadPoolMonitor();
+//        startThreadPoolMonitor();
     }
 
     public void startThreadPoolMonitor() {

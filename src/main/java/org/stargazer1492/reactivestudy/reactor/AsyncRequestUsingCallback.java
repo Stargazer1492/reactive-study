@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.time.Duration;
 
 /**
- * @author weijianglong
+ * @author stargazer
  * @since 2025/6/20
  */
 @Slf4j
